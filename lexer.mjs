@@ -9,6 +9,10 @@ export class Lexer{
         return this.#stream[this.#cursor];
     }
 
+    #peek (n =1){
+        return this.#stream[this.#cursor +n];
+    }
+
     tokenize(input = ""){
         this.#stream = input;
         this.#cursor = 0;
@@ -38,6 +42,38 @@ export class Lexer{
                     break;
                 case ")":
                     tokens.push(new Token(TokenType.RPAREN,this.#at()));
+                    break;
+                case ">":
+                    if (this.#peek() == "="){
+                        tokens.push(new Token(TokenType.GTE,">="));
+                        this.#cursor ++;
+                    } else {
+                        tokens.push(new Token(TokenType.GT,this.#at()));
+                    }
+                    break;
+                case "<":
+                    if (this.#peek() == "="){
+                        tokens.push(new Token(TokenType.LTE,"<="));
+                        this.#cursor ++;
+                    } else {
+                        tokens.push(new Token(TokenType.LT,this.#at()));
+                    }
+                    break;
+                case "=":
+                    if (this.#peek() == "="){
+                        tokens.push(new Token(TokenType.EQ,"=="));
+                        this.#cursor ++;
+                    } else {
+                        tokens.push(new Token(TokenType.ASSIGN));
+                    }
+                    break;
+                case "!":
+                    if (this.#peek() == "="){
+                        tokens.push(new Token(TokenType.NOT_EQ,"=="));
+                        this.#cursor ++;
+                    } else {
+                        tokens.push(new Token(TokenType.NEGATION, this.#at()));
+                    }
                     break;
                 default:
                     if (this.isDigit(this.#at())){

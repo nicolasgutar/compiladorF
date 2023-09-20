@@ -28,14 +28,18 @@ repl()
 
 const lexer = new Lexer();
 
-const tokens = lexer.tokenize("10 * ((10 + 3)/2) ");
+const tokens = lexer.tokenize("(5+4)-2 + 3");
+
+console.log(tokens);
+
 const parser = new Parser(tokens);
 
 const ast = parser.parse()
 
 let result = evaluate(ast);
 
-console.log(result);
 
-//console.log(tokens);
-//console.log(ast);
+
+console.log("a",ast);
+
+console.log(result);

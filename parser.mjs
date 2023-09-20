@@ -25,17 +25,30 @@ export class Parser{
     }
 
     parse () {
-        return this.#parseExpression()
+        return this.#parseTerm()
     }
 
     //completar este para hacer los operadores
-    #parseEquality(){
+    #parseEquality() {
         let leftHandSide = this.#parseExpression();
-
+        const ttype = this.#at().type;
+        while (ttype === TokenType.EQ || ttype === TokenType.NOT_EQ || ttype == TokenType.GT || ttype == TokenType.LT || ttype == TokenType.GTE || ttype == TokenType.LTE) {
+          const operator = this.#at().literal;
+          let rightHandSide = this.#parseExpression();
+      
+          leftHandSide = {
+            type: "BinaryOperator",
+            operator,
+            leftHandSide,
+            rightHandSide,
+          };
+        }
+      
         return leftHandSide;
     }
 
     //addition/substraction
+
     #parseExpression (){
         let leftHandSide = this.#parseTerm();
 
@@ -49,6 +62,7 @@ export class Parser{
 
         return leftHandSide;
     }
+
     #parseTerm(){
         let leftHandSide = this.#parseFactor();
 

@@ -49,17 +49,19 @@ export class Token {
     INTEGER: 'INTEGER',
     LBRACKET: 'LBRACKET',
     RBRACKET: 'RBRACKET',
-    DIVISION: 'DIVISION', // Added missing entry
-    ELSE: 'ELSE', // Added missing entry
-    GT: 'GT', // Added missing entry
-    LT: 'LT', // Added missing entry
-    MULTIPLICATION: 'MULTIPLICATION', // Added missing entry
-    NEGATION: 'NEGATION', // Added missing entry
-    NOT_EQ: 'NOT_EQ', // Added missing entry
-    TRUE: 'TRUE', // Added missing entry
-    FALSE: 'FALSE', // Added missing entry
-    IF: 'IF', // Added missing entry
-    RETURN: 'RETURN', // Added missing entry
+    DIVISION: 'DIVISION',
+    ELSE: 'ELSE',
+    GT: 'GT',
+    GTE: 'GTE',
+    LT: 'LT',
+    LTE: 'LTE',
+    MULTIPLICATION: 'MULTIPLICATION',
+    NEGATION: 'NEGATION',
+    NOT_EQ: 'NOT_EQ',
+    TRUE: 'TRUE',
+    FALSE: 'FALSE',
+    IF: 'IF',
+    RETURN: 'RETURN',
   };
   
   Object.freeze(TokenType);
