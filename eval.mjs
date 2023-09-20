@@ -48,6 +48,24 @@ function eval_numeric_binary_expr(lhs,rhs,operator) {
     lhs = parseInt(lhs.literal);
     rhs = parseInt(rhs.literal);
     switch (operator) {
+      case "==":
+        result = lhs == rhs;
+        break;
+      case "!=":
+        result = lhs != rhs;
+        break;
+      case ">=":
+        result = lhs >= rhs;
+        break;
+      case "<=":
+        result = lhs <= rhs;
+        break;
+      case ">":
+        result = lhs > rhs;
+        break;
+      case "<":
+        result = lhs < rhs;
+        break;
       case "+":
         result = lhs + rhs;
         break;
