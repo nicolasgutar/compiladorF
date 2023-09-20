@@ -23,8 +23,8 @@ export class Lexer{
             switch (this.#at()){
                 case " ":
                     break;
-                case "\n":
-                case "\t":
+                //case "\n":
+                //case "\t":
                 case "+":
                     tokens.push(new Token(TokenType.PLUS,this.#at()));
                     break;

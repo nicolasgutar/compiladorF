@@ -1,45 +1,33 @@
 import {Lexer} from "./lexer.mjs";
 import {Parser} from "./parser.mjs";
 import { evaluate } from "./eval.mjs";
+import readline from 'readline';
 
-/*
-function repl() {
-    const lexer = new Lexer();
-    // Continue Repl Until User Stops Or Types `exit`
-    while (true) {
-      const input = prompt("> ");
-      // Check for no user input or exit keyword.
-      if (!input || input.includes("exit")) {
-        Deno.exit(1);
-      }
-      const tokens = lexer.tokenize();
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  prompt: '>> ',
+});
+
+function startRepl() {
+  rl.question('line>>> ', (source) => {
+    if (source == 'salir()'){
+      return;
+    } else {
+      const lexer = new Lexer();
+      const tokens = lexer.tokenize("6*(3-2)");
+      console.log(tokens);
       const parser = new Parser(tokens);
-  
-      const program = parser.parse(input);
-      console.log(program);
-  
-      //const result = evaluate(program);
-      //console.log(result);
+      const ast = parser.parse();
+      console.log(ast);
+      let result = evaluate(ast);
+      console.log(result);
+      startRepl();
     }
-};
+  });
+}
 
-repl()
-*/
-
-const lexer = new Lexer();
-
-const tokens = lexer.tokenize("(5+4)-2 + 3");
-
-console.log(tokens);
-
-const parser = new Parser(tokens);
-
-const ast = parser.parse()
-
-let result = evaluate(ast);
+startRepl();
 
 
-
-console.log("a",ast);
-
-console.log(result);
