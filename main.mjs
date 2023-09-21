@@ -16,7 +16,7 @@ function startRepl() {
       return;
     } else {
       const lexer = new Lexer();
-      const tokens = lexer.tokenize("6*(3-2)");
+      const tokens = lexer.tokenize(source);
       console.log(tokens);
       const parser = new Parser(tokens);
       const ast = parser.parse();
