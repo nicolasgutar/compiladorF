@@ -17,7 +17,7 @@ export function evaluate(astNode): {
     }
   }
 */
-
+/*
 export function evaluate(ast){
     switch (ast.type){
         case "NumericLiteral":
@@ -28,7 +28,20 @@ export function evaluate(ast){
             console.error("This AST Node has not yet been setup for interpretation.",ast);
 
     }
+}*/
+export function evaluate(ast, symbolTable) {
+  switch (ast.type) {
+    case "NumericLiteral":
+      return ast;
+    case "BinaryOperator":
+      return eval_binary_expr(ast);
+    case "IfStatement":
+      return eval_if_statement(ast, symbolTable);
+    default:
+      console.error("This AST Node has not yet been set up for interpretation.", ast);
+  }
 }
+
 
 function eval_binary_expr(binop) {
     const lhs = evaluate(binop.leftHandSide);
@@ -85,4 +98,18 @@ function eval_numeric_binary_expr(lhs,rhs,operator) {
         throw new Error("Unsupported binary operator: " + operator);
     }
         return new Token(TokenType.NUMERICL, result);
+  }
+  function eval_if_statement(ifStatement, symbolTable) {
+    const condition = evaluate(ifStatement.condition, symbolTable);
+  
+    if (condition.type === TokenType.NUMERICL) {
+      if (condition.literal) {
+        return evaluate(ifStatement.ifBody, symbolTable);
+      } else if (ifStatement.elseBody) {
+        return evaluate(ifStatement.elseBody, symbolTable);
+      }
+    }
+  
+    throw new Error("Invalid condition in 'if' statement.");
+    
   }
