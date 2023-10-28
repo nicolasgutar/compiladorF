@@ -84,6 +84,5 @@ function eval_numeric_binary_expr(lhs,rhs,operator) {
       default:
         throw new Error("Unsupported binary operator: " + operator);
     }
-    console.log(result);
-    return new Token(TokenType.NUMERICL, result);
+        return new Token(TokenType.NUMERICL, result);
   }

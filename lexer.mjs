@@ -69,7 +69,7 @@ export class Lexer{
                     break;
                 case "!":
                     if (this.#peek() == "="){
-                        tokens.push(new Token(TokenType.NOT_EQ,"=="));
+                        tokens.push(new Token(TokenType.NOT_EQ,"!="));
                         this.#cursor ++;
                     } else {
                         tokens.push(new Token(TokenType.NEGATION, this.#at()));
