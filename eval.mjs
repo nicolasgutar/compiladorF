@@ -24,6 +24,8 @@ export function evaluate(ast){
             return ast;
         case "BinaryOperator":
             return eval_binary_expr(ast);
+        case "STRING":
+            return ast;
         default:
             console.error("This AST Node has not yet been setup for interpretation.",ast);
 
@@ -38,6 +40,13 @@ function eval_binary_expr(binop) {
     if (lhs.type == "NumericLiteral" && rhs.type == "NumericLiteral") {
       return eval_numeric_binary_expr(lhs,rhs,binop.operator);
     }
+
+    if (lhs.type == "STRING" && rhs.type == "STRING") {
+      return eval_string_exp(lhs,rhs,binop.operator)
+    }
+
+    console.error("unsopported operation between " + lhs.type + " and " + rhs.type);
+
   
     // One or both are NULL
     console.log("error");
@@ -86,4 +95,13 @@ function eval_numeric_binary_expr(lhs,rhs,operator) {
     }
     console.log(result);
     return new Token(TokenType.NUMERICL, result);
+
+  }
+
+  function eval_string_exp(lhs,rhs,operator){
+    let result;
+    if (operator == "+"){
+      return lhs.literal + rhs.literal;
+    }
+    console.error("unsupported operator " + operator + " for strings")
   }

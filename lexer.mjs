@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { Token, TokenType, lookup_token_type } from './tokens.mjs';
 
 export class Lexer{
@@ -75,6 +76,14 @@ export class Lexer{
                         tokens.push(new Token(TokenType.NEGATION, this.#at()));
                     }
                     break;
+                case '"':
+                    this.#cursor++;
+                    let read = ""
+                    while(this.#at() !== '"') {
+                        read += this.#at();
+                        this.#cursor++
+                    }
+                    tokens.push(new Token(TokenType.STRING, read))
                 default:
                     if (this.isDigit(this.#at())){
                         tokens.push(this.readInteger());

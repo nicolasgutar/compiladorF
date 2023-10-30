@@ -25,7 +25,7 @@ export class Parser{
     }
 
     parse () {
-        return this.#parseTerm()
+        return this.#parseEquality()
     }
 
     //completar este para hacer los operadores
@@ -84,6 +84,12 @@ export class Parser{
         if (this.#at().type == TokenType.INTEGER){
             let literal = new Token(TokenType.NUMERICL,this.#at().literal);
             this.#eatToken(TokenType.INTEGER);
+            return literal;
+        }
+
+        if (this.#at().type == TokenType.STRING){
+            let literal = new Token(TokenType.STRING,this.#at().literal);
+            this.#eatToken(TokenType.STRING);
             return literal;
         }
         
