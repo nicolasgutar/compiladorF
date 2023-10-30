@@ -78,12 +78,29 @@ export class Lexer{
                     break;
                 case '"':
                     this.#cursor++;
-                    let read = ""
+                    let read = "";
                     while(this.#at() !== '"') {
                         read += this.#at();
                         this.#cursor++
                     }
-                    tokens.push(new Token(TokenType.STRING, read))
+                    
+                    tokens.push(new Token(TokenType.STRING, read));
+                    break;
+                case 'l':
+                    let reead = ""
+                    while(this.isLetter(this.#at())) {
+                        reead += this.#at();
+                        this.#cursor++
+                    }
+                    reead += this.#at()
+                    if (reead == 'len:'){
+                        tokens.push(new Token(TokenType.LEN,reead));
+                    }
+                    else{
+                        tokens.push(new Token(TokenType.ILLEGAL),reead);
+                    }
+                    //this.#cursor++;
+                    break;
                 default:
                     if (this.isDigit(this.#at())){
                         tokens.push(this.readInteger());
@@ -91,7 +108,6 @@ export class Lexer{
                     }
                     break;
             }
-
             this.#cursor ++;
         }
         tokens.push(new Token(TokenType.EOF,""));
@@ -100,7 +116,7 @@ export class Lexer{
 
     isDigit(char) {
         return /[0-9]/.test(char);
-      }
+    }
 
     readInteger() {
         let read = "";
@@ -111,6 +127,17 @@ export class Lexer{
         }
         return new Token(TokenType.INTEGER,read);
     }
-    
+
+    /*
+    readIdent(){
+        while(this.#at() !== '"') {
+            read += this.#at();
+            this.#cursor++
+        }
+    }
+    */
+    isLetter(char) {
+        return /^[a-zA-Z]$/.test(char);
+    }
 }
 

@@ -28,7 +28,7 @@ export class Parser{
         return this.#parseEquality()
     }
 
-    //completar este para hacer los operadores
+    //lowest precedence
     #parseEquality() {
         let leftHandSide = this.#parseExpression();
         const ttype = this.#at().type;
@@ -78,6 +78,26 @@ export class Parser{
         return leftHandSide
     }
 
+    #parseUnary() {
+        if (this.#at().type === TokenType.LEN) {
+            this.#eatToken(TokenType.LEN);
+            this.#eatToken(TokenType.LPAREN);
+
+            const expr = this.#parseExpression();
+
+            this.#eatToken(TokenType.RPAREN);
+
+            return {
+                type: "UnaryOperator",
+                operator: "LEN",
+                operand: expr,
+            };
+        } else {
+            // If it's not a "LEN" token, parse a regular factor
+            return this.#parseFactor();
+        }
+    }
+
     //prescedencia mas alta
     #parseFactor(){
 
@@ -102,8 +122,10 @@ export class Parser{
             this.#eatToken(TokenType.RPAREN);
 
             return expr;
+        } else if (this.#at().type === TokenType.LEN) {
+            return this.#parseUnary();
+        } else {
+            throw Error(`Expected a parenthesis token, integer, or "LEN" token in input.`);
         }
-        
-        throw Error(`Expected a parenthesis token or a integer in input instead received: ${JSON.stringify}`)
     }
 }
