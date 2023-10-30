@@ -69,12 +69,20 @@ export class Lexer{
                     break;
                 case "!":
                     if (this.#peek() == "="){
-                        tokens.push(new Token(TokenType.NOT_EQ,"=="));
+                        tokens.push(new Token(TokenType.NOT_EQ,"!="));
                         this.#cursor ++;
                     } else {
                         tokens.push(new Token(TokenType.NEGATION, this.#at()));
                     }
                     break;
+                /*
+                case "\"":
+                    if (this.isChar(this.#peek())){
+                        tokens.push(this.readString());
+                    }
+                    this.#cursor++;
+                    break;
+                */
                 default:
                     if (this.isDigit(this.#at())){
                         tokens.push(this.readInteger());
@@ -96,11 +104,26 @@ export class Lexer{
     readInteger() {
         let read = "";
 
-        while(this.#cursor < this.#stream.length && this.isDigit(this.#at())) {
+        while(this.#cursor < this.#stream.length && this.isChar(this.#at())) {
             read += this.#at();
+            print(read)
             this.#cursor++
         }
         return new Token(TokenType.INTEGER,read);
+    }
+
+    isChar(char) {
+        return /[a-zA-Z]/.test(char);
+    }
+
+    readString(){
+        let read = "";
+
+        while(this.#cursor < this.#stream.length && this.isChar(this.#at())) {
+            read += this.#at();
+            this.#cursor++
+        }
+        return new Token(TokenType.STRING,read);
     }
     
 }

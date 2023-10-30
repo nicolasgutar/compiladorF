@@ -25,17 +25,18 @@ export class Parser{
     }
 
     parse () {
-        return this.#parseTerm()
+        return this.#parseEquality()
     }
 
     //completar este para hacer los operadores
     #parseEquality() {
         let leftHandSide = this.#parseExpression();
-        const ttype = this.#at().type;
-        while (ttype === TokenType.EQ || ttype === TokenType.NOT_EQ || ttype == TokenType.GT || ttype == TokenType.LT || ttype == TokenType.GTE || ttype == TokenType.LTE) {
+        while (this.#at().type === TokenType.EQ || this.#at().type === TokenType.NOT_EQ || this.#at().type == TokenType.GT || this.#at().type == TokenType.LT || this.#at().type == TokenType.GTE || this.#at().type == TokenType.LTE) {
           const operator = this.#at().literal;
+          const ttype = this.#at().type;
+          console.log(ttype)
+          this.#eatToken(ttype);
           let rightHandSide = this.#parseExpression();
-      
           leftHandSide = {
             type: "BinaryOperator",
             operator,
@@ -92,12 +93,12 @@ export class Parser{
 
         if (this.#at().type == TokenType.LPAREN){
             this.#eatToken(TokenType.LPAREN);
-            expr = this.#parseExpression();
+            expr = this.#parseEquality();
             this.#eatToken(TokenType.RPAREN);
 
             return expr;
         }
         
-        throw Error(`Expected a parenthesis token or a integer in input instead received: ${JSON.stringify}`)
+        throw Error(`Expected a parenthesis token or a integer in input instead received: ${this.#at().type}`)
     }
 }

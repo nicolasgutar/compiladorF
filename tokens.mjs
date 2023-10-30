@@ -62,6 +62,7 @@ export class Token {
     FALSE: 'FALSE',
     IF: 'IF',
     RETURN: 'RETURN',
+    STRING: 'STRING',
   };
   
   Object.freeze(TokenType);
