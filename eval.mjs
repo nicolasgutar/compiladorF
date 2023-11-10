@@ -114,6 +114,7 @@ function eval_numeric_binary_expr(lhs,rhs,operator) {
 
   }
 
+  //nuevo
   function eval_string_exp(lhs,rhs,operator){
     if (operator == "+"){
       return lhs.literal + rhs.literal;

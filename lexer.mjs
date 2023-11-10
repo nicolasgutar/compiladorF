@@ -68,7 +68,7 @@ export class Lexer{
                         tokens.push(new Token(TokenType.ASSIGN));
                     }
                     break;
-// 4 + 8 != 9
+// !(5*8<2)
 
                 //logica para el token de negacion
                 case "!":
@@ -79,6 +79,9 @@ export class Lexer{
                         tokens.push(new Token(TokenType.NEGATION, this.#at()));
                     }
                     break;
+                //logica para strings
+
+                // "aioasijdas"
                 case '"':
                     this.#cursor++;
                     let read = "";
@@ -89,6 +92,7 @@ export class Lexer{
                     
                     tokens.push(new Token(TokenType.STRING, read));
                     break;
+                //logica token len:
                 case 'l':
                     let reead = ""
                     while(this.isLetter(this.#at())) {

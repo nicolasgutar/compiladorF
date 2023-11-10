@@ -107,6 +107,8 @@ export class Parser{
             return literal;
         }
 
+        //se añadio en el ultimo update
+
         if (this.#at().type == TokenType.STRING){
             let literal = new Token(TokenType.STRING,this.#at().literal);
             this.#eatToken(TokenType.STRING);
@@ -122,6 +124,7 @@ export class Parser{
             this.#eatToken(TokenType.RPAREN);
 
             return expr;
+            //se añadio en el ultimo update
         } else if (this.#at().type === TokenType.LEN) {
             return this.#parseUnary();
         } else {
