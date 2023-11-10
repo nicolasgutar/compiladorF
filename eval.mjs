@@ -26,10 +26,21 @@ export function evaluate(ast){
             return eval_binary_expr(ast);
         case "STRING":
             return ast;
+          case "UnaryOperator":
+            return eval_unary_expr(ast);
         default:
             console.error("This AST Node has not yet been setup for interpretation.",ast);
 
     }
+}
+
+function eval_unary_expr(binop) {
+  let result;
+  switch(binop.operator){
+    case "LEN":
+      result =  binop.operand.literal.length
+  }
+  return new Token(TokenType.NUMERICL, result);
 }
 
 function eval_binary_expr(binop) {
