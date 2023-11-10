@@ -24,9 +24,11 @@ export function evaluate(ast){
             return ast;
         case "BinaryOperator":
             return eval_binary_expr(ast);
+        //nuevo
         case "STRING":
             return ast;
-          case "UnaryOperator":
+          //nuevo
+        case "UnaryOperator":
             return eval_unary_expr(ast);
         default:
             console.error("This AST Node has not yet been setup for interpretation.",ast);
@@ -39,6 +41,7 @@ function eval_unary_expr(binop) {
   switch(binop.operator){
     case "LEN":
       result =  binop.operand.literal.length
+    //incorporar lo del not
   }
   return new Token(TokenType.NUMERICL, result);
 }
@@ -51,6 +54,8 @@ function eval_binary_expr(binop) {
     if (lhs.type == "NumericLiteral" && rhs.type == "NumericLiteral") {
       return eval_numeric_binary_expr(lhs,rhs,binop.operator);
     }
+
+    //nuevo -------------------
 
     if (lhs.type == "STRING" && rhs.type == "STRING") {
       return eval_string_exp(lhs,rhs,binop.operator)
@@ -110,7 +115,6 @@ function eval_numeric_binary_expr(lhs,rhs,operator) {
   }
 
   function eval_string_exp(lhs,rhs,operator){
-    let result;
     if (operator == "+"){
       return lhs.literal + rhs.literal;
     }

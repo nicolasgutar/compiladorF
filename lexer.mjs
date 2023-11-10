@@ -68,9 +68,12 @@ export class Lexer{
                         tokens.push(new Token(TokenType.ASSIGN));
                     }
                     break;
+// 4 + 8 != 9
+
+                //logica para el token de negacion
                 case "!":
                     if (this.#peek() == "="){
-                        tokens.push(new Token(TokenType.NOT_EQ,"=="));
+                        tokens.push(new Token(TokenType.NOT_EQ,"!="));
                         this.#cursor ++;
                     } else {
                         tokens.push(new Token(TokenType.NEGATION, this.#at()));
